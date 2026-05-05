@@ -86,7 +86,16 @@ text = "Set file expot/import locations."
 [node name="FreesoundCommunity-microwave-ding-104123" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_h2yge")
 
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 478.0
+offset_right = 148.0
+offset_bottom = 501.0
+text = "Elapsted Time: "
+
 [connection signal="done" from="FileManager" to="." method="_on_file_manager_done"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="Label/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="value_changed" from="ProgressBar" to="." method="_on_progress_bar_value_changed"]
 [connection signal="pressed" from="InputFile" to="." method="_on_input_file_pressed"]

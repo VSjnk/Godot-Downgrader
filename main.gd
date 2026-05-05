@@ -45,12 +45,16 @@ const conversion_data = {
 	"offset_bottom" : "margin_bottom",
 	"offset_right" : "margin_right",
 	"Vector2i" : "Vector2",
-	"3D" : ""
+	"3D" : "",
+	"CharacterBody" : "KinematicBody"
 	
 }
 
 var import_path = "res://example/import/"
 var export_path = "res://example/export/"
+
+var starting_time = 0
+var ending_time = 1
 
 var check_dirs = []
 
@@ -59,6 +63,7 @@ var converted_file
 var transfer_other_files = false
 
 func _ready():
+	print()
 	check_button.button_pressed = transfer_other_files
 	log_text(scan_tscn_files(import_path))
 	if transfer_other_files:
@@ -98,6 +103,7 @@ func scan_tscn_files(directory_path: String) -> Array:
 
 func _on_button_pressed():
 	text_log.clear()
+	starting_time = Time.get_unix_time_from_system()
 	progress_bar.max_value = files.size()
 	progress_bar.value = 0
 	for fuck in files:
@@ -191,7 +197,10 @@ func _on_button_pressed():
 			log_text("Finished conversion! and remeber to set the gravity variable to 980! or else you'll be on the moon!\n*Note: Remember, there WILL be stuff still broken!")
 			#add sfx for when it's finished.
 			pass
+	ending_time = Time.get_unix_time_from_system()
 	$"FreesoundCommunity-microwave-ding-104123".play()
+	$Label2.text = "Elapsted Time: " + str(format_time(ending_time - starting_time))
+	
 
 func remove_type_with_regex(text: String) -> String:
 	var regex = RegEx.new()
@@ -357,5 +366,9 @@ func convert_position_data(data):
 
 
 func _on_progress_bar_value_changed(value: float) -> void:
-	if value >= 99.99:
-		$"FreesoundCommunity-microwave-ding-104123".play()
+	$Label2.text = "Elapsted Time: " + str(format_time(Time.get_unix_time_from_system() - starting_time))
+
+func format_time(seconds: int) -> String:
+	var minutes = seconds / 60
+	var secs = seconds % 60
+	return "%d:%02d" % [minutes, secs]
