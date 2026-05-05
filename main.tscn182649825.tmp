@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://durdoyvpgjkj0"]
+[gd_scene load_steps=3 format=3 uid="uid://durdoyvpgjkj0"]
 
 [ext_resource type="Script" uid="uid://bhghhj6g78ois" path="res://main.gd" id="1_8hfwy"]
 [ext_resource type="PackedScene" uid="uid://c6i0lnsygs8vb" path="res://godot-file-manager/window.tscn" id="2_0xm2m"]
-[ext_resource type="AudioStream" uid="uid://q6idm77t6nan" path="res://freesound_community-microwave-ding-104123.mp3" id="3_h2yge"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -82,9 +81,6 @@ offset_top = 187.0
 offset_right = 247.0
 offset_bottom = 218.0
 text = "Set file expot/import locations."
-
-[node name="FreesoundCommunity-microwave-ding-104123" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_h2yge")
 
 [connection signal="done" from="FileManager" to="." method="_on_file_manager_done"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

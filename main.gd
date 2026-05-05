@@ -19,7 +19,7 @@ const conversion_data = {
 	"@" : "",
 	"extends KinematicBody2D" : "extends KinematicBody2D\nvar velocity = Vector2(0,0)",
 	"move_and_slide()" : "velocity = move_and_slide(velocity)",
-	'get_tree().change_scene("res://UI/LoadingScreen/LoadingScreen.tscn")' : "get_tree().change_scene(Globals.scenename)",
+	#'get_tree().change_scene("res://UI/LoadingScreen/LoadingScreen.tscn")' : "get_tree().change_scene(Globals.scenename)", #temp DO NOT USE
 	"FastNoiseLite" : "OpenSimplexNoise",
 	"NoiseTexture" : "OpenSimplexNoise",
 	"TileSetAtlasSource" : "TileSet",
@@ -32,7 +32,21 @@ const conversion_data = {
 	":0/0" : "",
 	":1/0" : "",
 	":2/0" : "",
-	":3/0" : ""
+	":3/0" : "",
+	"ceili" : "ceil",
+	"button_pressed" : "pressed",
+	"Node3D" : "Spatial",
+	"deg_to_rad" : "deg2rad",
+	"find_child" : "find_node",
+	"StandardMaterial3D" : "Spatial",
+	"Transform3D" : "Transform",
+	"offset_left" : "margin_left",
+	"offset_top" : "margin_top",
+	"offset_bottom" : "margin_bottom",
+	"offset_right" : "margin_right",
+	"Vector2i" : "Vector2",
+	"3D" : ""
+	
 }
 
 var import_path = "res://example/import/"
@@ -116,6 +130,7 @@ func _on_button_pressed():
 								
 				lines = converted_file.split("\n")
 				for id_line in lines:
+					await get_tree().process_frame
 					if "id=" in id_line:
 						id_placements.append(get_id_from_line(id_line))
 						converted_file = converted_file.replace(str(id_placements[id_placements.size() - 1]), str(id_placements.size()))
@@ -176,6 +191,7 @@ func _on_button_pressed():
 			log_text("Finished conversion! and remeber to set the gravity variable to 980! or else you'll be on the moon!\n*Note: Remember, there WILL be stuff still broken!")
 			#add sfx for when it's finished.
 			pass
+	$"FreesoundCommunity-microwave-ding-104123".play()
 
 func remove_type_with_regex(text: String) -> String:
 	var regex = RegEx.new()
@@ -338,3 +354,8 @@ func convert_position_data(data):
 			data_list += str(data) + "\n"
 	print(data_list)
 	return data_list
+
+
+func _on_progress_bar_value_changed(value: float) -> void:
+	if value >= 99.99:
+		$"FreesoundCommunity-microwave-ding-104123".play()
